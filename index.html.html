@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aman Jaryal — Marketing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080608;
+  --charcoal:#111010;
+  --graphite:#1e1c1e;
+  --silver:#6b6870;
+  --smoke:#c8c4cc;
+  --white:#f4f2f6;
+  --flame:#e84118;
+  --flame-dim:#b53010;
+  --flame-glow:rgba(232,65,24,.18);
+  --gold:#d4a033;
+  --border-bright:rgba(244,242,246,.12);
+  --border-dim:rgba(244,242,246,.06);
+  --mono:'DM Mono',monospace;
+  --serif:'Libre Baskerville',serif;
+  --sans:'Nunito Sans',sans-serif;
+  --display:'Bebas Neue',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--black);
+  color:var(--white);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ─── GRAIN OVERLAY ─── */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:1000;
+  pointer-events:none;
+  opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ─── CUSTOM CURSOR ─── */
+.cur{
+  position:fixed;width:8px;height:8px;border-radius:50%;
+  background:var(--flame);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:exclusion;
+  transition:width .2s,height .2s,opacity .2s;
+}
+.cur-trail{
+  position:fixed;width:32px;height:32px;border-radius:50%;
+  border:1px solid rgba(232,65,24,.5);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .15s ease,width .25s,height .25s;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--flame)}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:54px;
+  border-bottom:1px solid var(--border-dim);
+  background:rgba(8,6,8,.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.nav-logo{
+  font-family:var(--display);font-size:24px;
+  letter-spacing:.12em;color:var(--white);
+}
+.nav-logo sup{
+  font-family:var(--mono);font-size:9px;font-weight:300;
+  color:var(--flame);letter-spacing:.06em;vertical-align:super;margin-left:4px;
+}
+.nav-items{display:flex;gap:32px;list-style:none}
+.nav-items a{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--silver);text-decoration:none;
+  transition:color .2s;
+}
+.nav-items a:hover{color:var(--flame)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;padding-top:54px;
+  display:grid;grid-template-rows:1fr auto;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 30%, rgba(232,65,24,.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(212,160,51,.04) 0%, transparent 60%),
+    var(--black);
+}
+/* diagonal rule */
+.hero-bg::after{
+  content:'';position:absolute;
+  top:0;right:30%;bottom:0;
+  width:1px;background:linear-gradient(to bottom,transparent,rgba(244,242,246,.07) 30%,rgba(244,242,246,.07) 70%,transparent);
+}
+.hero-main{
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:80px 48px 60px;
+  position:relative;z-index:2;gap:48px;
+}
+.hero-left{}
+.eyebrow{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--flame);margin-bottom:24px;
+  display:flex;align-items:center;gap:12px;
+  animation:fromLeft .8s cubic-bezier(.16,1,.3,1) .1s both;
+}
+.eyebrow::before{content:'//';font-size:10px;opacity:.6}
+.hero-name{
+  font-family:var(--display);
+  font-size:clamp(88px,11vw,148px);
+  line-height:.88;letter-spacing:.04em;
+  color:var(--white);
+  margin-bottom:8px;
+  animation:fromLeft .9s cubic-bezier(.16,1,.3,1) .18s both;
+}
+.hero-name .flame{color:var(--flame)}
+.hero-role{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(18px,2.2vw,26px);
+  color:rgba(244,242,246,.38);font-weight:400;
+  letter-spacing:.01em;line-height:1.3;
+  margin-bottom:40px;
+  animation:fromLeft .9s cubic-bezier(.16,1,.3,1) .26s both;
+}
+.hero-bio{
+  font-size:14px;color:rgba(244,242,246,.45);
+  max-width:400px;line-height:1.85;font-weight:300;
+  margin-bottom:44px;
+  animation:fromLeft .9s cubic-bezier(.16,1,.3,1) .34s both;
+}
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:8px;
+  animation:fromLeft .9s cubic-bezier(.16,1,.3,1) .42s both;
+}
+.tag{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  padding:5px 13px;border-radius:2px;
+  border:1px solid var(--border-bright);
+  color:rgba(244,242,246,.5);letter-spacing:.06em;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.tag:hover{border-color:var(--flame);color:var(--white);background:var(--flame-glow)}
+
+/* hero right — stat board */
+.hero-right{
+  animation:fromRight .9s cubic-bezier(.16,1,.3,1) .3s both;
+}
+.stat-board{
+  border:1px solid var(--border-bright);border-radius:4px;
+  overflow:hidden;
+}
+.stat-board-header{
+  background:var(--flame);
+  padding:12px 20px;
+  font-family:var(--mono);font-size:9px;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;color:white;
+  display:flex;align-items:center;gap:8px;
+}
+.stat-board-header::before{
+  content:'●';font-size:7px;opacity:.7;
+  animation:blink 1.8s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:.7}50%{opacity:.15}}
+.stat-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border-dim);
+}
+.stat-row:last-child{border-bottom:none}
+.stat-cell{
+  padding:22px 20px;border-right:1px solid var(--border-dim);
+  transition:background .2s;
+}
+.stat-cell:last-child{border-right:none}
+.stat-cell:hover{background:rgba(232,65,24,.05)}
+.stat-n{
+  font-family:var(--display);
+  font-size:32px;letter-spacing:.04em;
+  color:var(--white);line-height:1;margin-bottom:5px;
+}
+.stat-n .small{font-size:22px}
+.stat-l{
+  font-family:var(--mono);font-size:9px;font-weight:300;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--silver);line-height:1.4;
+}
+.stat-s{font-size:10px;color:rgba(244,242,246,.22);margin-top:3px;font-style:italic;font-family:var(--serif)}
+
+/* hero bottom ticker */
+.ticker-wrap{
+  border-top:1px solid var(--border-bright);
+  padding:14px 48px;
+  position:relative;z-index:2;overflow:hidden;
+  display:flex;align-items:center;gap:16px;
+}
+.ticker-label{
+  font-family:var(--mono);font-size:9px;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--flame);white-space:nowrap;flex-shrink:0;
+}
+.ticker-track{display:flex;gap:0;animation:ticker 18s linear infinite;flex-shrink:0}
+.ticker-item{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  color:var(--silver);letter-spacing:.1em;white-space:nowrap;
+  padding:0 32px;
+}
+.ticker-item::after{content:'◆';margin-left:32px;font-size:6px;color:var(--flame);vertical-align:middle}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── SECTION BASE ─── */
+.s{padding:88px 48px;border-top:1px solid var(--border-dim);position:relative}
+.s-label{
+  font-family:var(--mono);font-size:9.5px;font-weight:300;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--flame);
+  margin-bottom:12px;display:flex;align-items:center;gap:10px;
+}
+.s-label::before{content:'';display:block;width:24px;height:1px;background:var(--flame)}
+.s-title{
+  font-family:var(--display);
+  font-size:clamp(40px,5.5vw,68px);
+  line-height:.95;letter-spacing:.06em;
+  color:var(--white);margin-bottom:56px;
+}
+.s-title em{
+  font-family:var(--serif);font-style:italic;font-size:.7em;
+  color:rgba(244,242,246,.35);letter-spacing:.01em;
+}
+
+/* ─── WINS ─── */
+.wins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dim);border:1px solid var(--border-dim)}
+.win{
+  background:var(--black);padding:36px 30px;
+  position:relative;overflow:hidden;
+  transition:background .25s;
+}
+.win:hover{background:var(--graphite)}
+.win::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--flame);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.16,1,.3,1);
+}
+.win:hover::before{transform:scaleX(1)}
+.win-cat{
+  font-family:var(--mono);font-size:9px;font-weight:300;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--silver);
+  margin-bottom:20px;padding-bottom:14px;
+  border-bottom:1px solid var(--border-dim);
+}
+.win-big{
+  font-family:var(--display);
+  font-size:58px;letter-spacing:.02em;
+  color:var(--flame);line-height:.85;
+  margin-bottom:14px;
+}
+.win-title{
+  font-family:var(--serif);font-size:14px;font-weight:700;
+  color:var(--white);margin-bottom:10px;line-height:1.4;
+}
+.win-body{font-size:12.5px;color:var(--silver);line-height:1.75;font-weight:300}
+
+/* ─── SPOTLIGHT ─── */
+.spotlight-wrap{padding:0 48px 88px;border-top:none}
+.spotlight{
+  background:var(--graphite);
+  border:1px solid var(--border-bright);
+  border-left:3px solid var(--flame);
+  padding:52px 56px;position:relative;overflow:hidden;
+}
+.spotlight::before{
+  content:'CGC';
+  position:absolute;right:-10px;top:-20px;
+  font-family:var(--display);font-size:220px;letter-spacing:.04em;
+  color:rgba(232,65,24,.04);pointer-events:none;line-height:1;
+}
+.spot-head{
+  font-family:var(--display);font-size:36px;letter-spacing:.06em;
+  color:var(--white);margin-bottom:16px;
+}
+.spot-body{font-size:14px;color:rgba(244,242,246,.55);line-height:1.85;max-width:800px;font-weight:300}
+.spot-stats{display:flex;gap:0;margin-top:40px;padding-top:32px;border-top:1px solid var(--border-dim)}
+.spot-s{flex:1;padding-right:36px;margin-right:36px;border-right:1px solid var(--border-dim)}
+.spot-s:last-child{border-right:none;margin-right:0;padding-right:0}
+.spot-sn{font-family:var(--display);font-size:38px;letter-spacing:.04em;line-height:1;margin-bottom:5px}
+.spot-sl{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--silver)}
+
+/* ─── EXPERIENCE ─── */
+.exp-list{display:flex;flex-direction:column}
+.exp-row{
+  display:grid;grid-template-columns:240px 1fr;gap:48px;
+  padding:52px 0;border-top:1px solid var(--border-dim);
+}
+.exp-row:last-child{border-bottom:1px solid var(--border-dim)}
+.exp-yr{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;color:var(--silver);margin-bottom:10px}
+.exp-co{font-family:var(--display);font-size:20px;letter-spacing:.08em;color:var(--white);line-height:1.1;margin-bottom:5px}
+.exp-co-sub{font-size:11px;color:var(--silver);font-weight:300;line-height:1.5}
+.exp-role{
+  font-family:var(--serif);font-size:20px;font-weight:700;
+  color:var(--white);margin-bottom:5px;line-height:1.2;
+}
+.exp-vert{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.08em;color:var(--silver);margin-bottom:22px;font-style:italic}
+.exp-pts{list-style:none;display:flex;flex-direction:column;gap:9px}
+.exp-pts li{font-size:13.5px;color:rgba(244,242,246,.55);padding-left:20px;position:relative;line-height:1.7;font-weight:300}
+.exp-pts li::before{content:'→';position:absolute;left:0;color:var(--flame);font-size:10px;top:4px}
+
+/* ─── CHANNELS ─── */
+.channels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dim);border:1px solid var(--border-dim);margin-bottom:36px}
+.ch{background:var(--charcoal);padding:30px 26px;transition:background .2s}
+.ch:hover{background:var(--graphite)}
+.ch-cat{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:var(--flame);margin-bottom:12px}
+.ch-name{font-family:var(--display);font-size:22px;letter-spacing:.06em;color:var(--white);margin-bottom:10px}
+.ch-body{font-size:12px;color:var(--silver);line-height:1.7;font-weight:300}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.tool{
+  font-family:var(--mono);font-size:10px;font-weight:300;
+  padding:5px 13px;border:1px solid var(--border-bright);
+  color:var(--silver);letter-spacing:.06em;
+  transition:border-color .2s,color .2s;
+}
+.tool:hover{border-color:var(--flame);color:var(--white)}
+
+/* ─── VERTICALS ─── */
+.verts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-dim);border:1px solid var(--border-dim)}
+.vert{background:var(--black);padding:36px 24px;text-align:center;transition:background .2s}
+.vert:hover{background:var(--graphite)}
+.vert-icon{font-size:28px;margin-bottom:14px;display:block}
+.vert-n{font-family:var(--display);font-size:18px;letter-spacing:.08em;color:var(--white);margin-bottom:8px}
+.vert-x{font-size:11.5px;color:var(--silver);line-height:1.6;font-weight:300}
+
+/* ─── FOOTER ─── */
+footer{
+  border-top:1px solid var(--border-bright);
+  padding:60px 48px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  background:var(--black);
+}
+.f-name{font-family:var(--display);font-size:52px;letter-spacing:.06em;color:var(--white);line-height:1}
+.f-sub{font-family:var(--mono);font-size:9.5px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin-top:6px}
+.f-right{text-align:right}
+.f-right p{font-family:var(--mono);font-size:11px;font-weight:300;color:var(--silver);line-height:2;letter-spacing:.04em}
+.f-quote{
+  font-family:var(--serif);font-style:italic;font-size:15px;
+  color:var(--flame);display:block;margin-top:10px;
+}
+
+/* ─── REVEAL ANIMATION ─── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv.d1{transition-delay:.04s}.rv.d2{transition-delay:.1s}.rv.d3{transition-delay:.16s}
+.rv.d4{transition-delay:.22s}.rv.d5{transition-delay:.28s}.rv.d6{transition-delay:.34s}
+
+/* ─── KEYFRAMES ─── */
+@keyframes fromLeft{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fromRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:920px){
+  nav{padding:0 20px}
+  .nav-items{display:none}
+  .hero-main{grid-template-columns:1fr;padding:80px 20px 40px}
+  .hero-right{display:none}
+  .hero-name{font-size:80px}
+  .ticker-wrap{padding:14px 20px}
+  .s{padding:60px 20px}
+  .spotlight-wrap{padding:0 20px 60px}
+  .wins-grid,.channels-grid{grid-template-columns:1fr}
+  .verts{grid-template-columns:repeat(2,1fr)}
+  .exp-row{grid-template-columns:1fr;gap:12px}
+  .spot-stats{flex-wrap:wrap;gap:24px}
+  .spot-s{border-right:none;margin-right:0;flex:0 0 45%}
+  footer{flex-direction:column;gap:32px;padding:48px 20px}
+  .f-right{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-trail" id="curT"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AMAN <sup>portfolio</sup></div>
+  <ul class="nav-items">
+    <li><a href="#wins">Impact</a></li>
+    <li><a href="#exp">Experience</a></li>
+    <li><a href="#ch">Channels</a></li>
+    <li><a href="#vert">Verticals</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-main">
+    <div class="hero-left">
+      <div class="eyebrow">Marketing Portfolio · 2025</div>
+      <div class="hero-name">AMAN<br/><span class="flame">JARYAL</span></div>
+      <div class="hero-role">Group Head — Performance Marketing<br/>&amp; Account Strategy</div>
+      <p class="hero-bio">Six years. Three of the world's top agency networks. From executing campaigns at Merkle Sokrati to leading multi-crore mandates at AGL Hakuhodo — performance is not just a discipline, it's a craft.</p>
+      <div class="hero-tags">
+        <span class="tag">AGL Hakuhodo</span>
+        <span class="tag">Publicis Groupe</span>
+        <span class="tag">Merkle Sokrati</span>
+        <span class="tag">~$25M Managed</span>
+        <span class="tag">Meta · Google · DV360</span>
+        <span class="tag">Performance + Brand</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stat-board">
+        <div class="stat-board-header">Live career metrics</div>
+        <div class="stat-row">
+          <div class="stat-cell">
+            <div class="stat-n">~$25M</div>
+            <div class="stat-l">Total budget managed</div>
+            <div class="stat-s">6 years across 3 networks</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-n">~$4M</div>
+            <div class="stat-l">Annual budget (CGC)</div>
+            <div class="stat-s">Current largest mandate</div>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-cell">
+            <div class="stat-n"><span class="small">2</span> Lac+</div>
+            <div class="stat-l">Quality leads delivered</div>
+            <div class="stat-s">CGC · Aakash · Amity</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-n">70%</div>
+            <div class="stat-l">Website CAC reduction</div>
+            <div class="stat-s">With 4× user growth</div>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-cell">
+            <div class="stat-n">2×</div>
+            <div class="stat-l">App user base (Zee5)</div>
+            <div class="stat-s">At 30% lower cost</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-n">6+</div>
+            <div class="stat-l">Years · 3 networks</div>
+            <div class="stat-s">Merkle · Publicis · Haku</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ticker-wrap">
+    <span class="ticker-label">channels</span>
+    <div class="ticker-track">
+      <span class="ticker-item">Meta Ads</span><span class="ticker-item">Google Search</span>
+      <span class="ticker-item">Performance Max</span><span class="ticker-item">DV360</span>
+      <span class="ticker-item">LinkedIn Ads</span><span class="ticker-item">Snapchat</span>
+      <span class="ticker-item">YouTube</span><span class="ticker-item">UA Campaigns</span>
+      <span class="ticker-item">CTWA</span><span class="ticker-item">AppsFlyer MMP</span>
+      <span class="ticker-item">GA4</span><span class="ticker-item">GTM</span>
+      <span class="ticker-item">Meta Ads</span><span class="ticker-item">Google Search</span>
+      <span class="ticker-item">Performance Max</span><span class="ticker-item">DV360</span>
+      <span class="ticker-item">LinkedIn Ads</span><span class="ticker-item">Snapchat</span>
+      <span class="ticker-item">YouTube</span><span class="ticker-item">UA Campaigns</span>
+      <span class="ticker-item">CTWA</span><span class="ticker-item">AppsFlyer MMP</span>
+      <span class="ticker-item">GA4</span><span class="ticker-item">GTM</span>
+    </div>
+  </div>
+</section>
+
+<!-- WINS -->
+<section class="s" id="wins">
+  <div class="s-label">Impact</div>
+  <div class="s-title">NUMBERS THAT<br/><em>moved the needle.</em></div>
+  <div class="wins-grid">
+    <div class="win rv d1">
+      <div class="win-cat">App Growth · Zee5</div>
+      <div class="win-big">2×</div>
+      <div class="win-title">User base doubled at 30% lower cost</div>
+      <div class="win-body">Full-funnel UAC strategy across Google & Meta. Handled AppsFlyer MMP attribution, GA4 analytics, and end-to-end reporting. Paired with creative experimentation across placements and formats.</div>
+    </div>
+    <div class="win rv d2">
+      <div class="win-cat">Retention · Zee5</div>
+      <div class="win-big">25%</div>
+      <div class="win-title">Retention improvement + uninstall rate drop</div>
+      <div class="win-body">Optimised re-engagement and lifecycle campaigns that sustained user activity post-install. Reduced churn while improving all downstream app health metrics simultaneously.</div>
+    </div>
+    <div class="win rv d3">
+      <div class="win-cat">Website Acquisition</div>
+      <div class="win-big">70%</div>
+      <div class="win-title">Cost reduction with 4× more users</div>
+      <div class="win-body">Redesigned acquisition strategy with creative-led testing, placement diversification, and audience architecture. 4× user volume at a fraction of prior spend.</div>
+    </div>
+    <div class="win rv d4">
+      <div class="win-cat">CGC University · PMax</div>
+      <div class="win-big">3→30%</div>
+      <div class="win-title">Quality lead ratio in under 60 days</div>
+      <div class="win-body">Implemented Enriched Customer Lists (ECL) for Performance Max. Combined with targeting and creative overhaul — quality ratio jumped 10× in two months.</div>
+    </div>
+    <div class="win rv d5">
+      <div class="win-cat">CGC University · Scale</div>
+      <div class="win-big">6×</div>
+      <div class="win-title">Budget scaled · CPL rose only 20%</div>
+      <div class="win-body">Grew monthly spend from ~$120K to ~$600K (Jan–May) while keeping CPL growth at just 20% via Lead Form campaigns, Call Extensions, and CTWA experiments.</div>
+    </div>
+    <div class="win rv d6">
+      <div class="win-cat">Creative Strategy</div>
+      <div class="win-big">↑↑↑</div>
+      <div class="win-title">Creative-led growth across all accounts</div>
+      <div class="win-body">Developed new themes, formats, and placement strategies that became the primary growth lever. Creatives treated as performance infrastructure, not decoration.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CGC SPOTLIGHT -->
+<div class="spotlight-wrap rv">
+  <div class="spotlight">
+    <div class="spot-head">SPOTLIGHT: CGC UNIVERSITY — ~$4M ANNUAL PORTFOLIO</div>
+    <p class="spot-body">India's largest single-account education mandate in the portfolio. Delivered 1,00,000+ quality search leads at a blended CPL of ~$12 across brand search, competitor targeting, and generic keyword campaigns. Full-stack setup: SQR-driven optimisation, conversion rate improvements, ECL for PMax, Lead Form campaigns, Call Extensions, and live CTWA experiments on both Meta and Search to support lead flow at scale.</p>
+    <div class="spot-stats">
+      <div class="spot-s"><div class="spot-sn">~$12</div><div class="spot-sl">Blended CPL</div></div>
+      <div class="spot-s"><div class="spot-sn">1 Lac+</div><div class="spot-sl">Quality leads</div></div>
+      <div class="spot-s"><div class="spot-sn">~$600K</div><div class="spot-sl">Monthly peak spend</div></div>
+      <div class="spot-s"><div class="spot-sn">+20%</div><div class="spot-sl">CPL on 6× scale</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section class="s" id="exp">
+  <div class="s-label">Experience</div>
+  <div class="s-title">THREE NETWORKS.<br/><em>six years. one craft.</em></div>
+  <div class="exp-list">
+
+    <div class="exp-row rv">
+      <div>
+        <div class="exp-yr">2025 – Present</div>
+        <div class="exp-co">AGL HAKUHODO</div>
+        <div class="exp-co-sub">Hakuhodo Global Network<br/>India</div>
+      </div>
+      <div>
+        <div class="exp-role">Group Head — Performance Marketing & Account Management</div>
+        <div class="exp-vert">Education · E-commerce · Services · ~$350K–$600K/month</div>
+        <ul class="exp-pts">
+          <li>Primary strategic interface for key accounts — translating client business goals into digital marketing roadmaps across performance and brand channels</li>
+          <li>Lead multi-channel campaign strategy and execution oversight across Meta Ads and Google Ads ecosystems</li>
+          <li>Architect Click-to-WhatsApp lead gen campaigns on Meta with bot-driven qualification flows and urgency-led creative frameworks</li>
+          <li>Drive account growth through upsell/cross-sell identification — resulting in expanded scopes and deepened client relationships</li>
+          <li>Coordinate cross-functional teams (creative, analytics, media) to ensure delivery standards and SLA adherence across all mandates</li>
+          <li>Facilitate monthly/quarterly business reviews with performance dashboards and strategic recommendations backed by analytics</li>
+          <li>Spearhead new client onboarding and lead pitch development for new business acquisition</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-row rv">
+      <div>
+        <div class="exp-yr">2022 – 2025</div>
+        <div class="exp-co">PUBLICIS GROUPE</div>
+        <div class="exp-co-sub">Top 5 Global Agency Network<br/>India</div>
+      </div>
+      <div>
+        <div class="exp-role">Account Manager — Digital & Performance</div>
+        <div class="exp-vert">Zee5 · Education · Retail · Brand + Performance</div>
+        <ul class="exp-pts">
+          <li>Managed end-to-end client servicing as day-to-day contact for senior brand stakeholders across brand and performance accounts</li>
+          <li>Drove Zee5 app user base to 2× growth at 30% lower cost; improved retention 25% and cut uninstalls 25% through lifecycle optimisation</li>
+          <li>Revolutionised website acquisition — 70% cost reduction while generating 4× more users through creative testing and audience architecture</li>
+          <li>Handled AppsFlyer MMP attribution, GA4 analytics, and full-funnel performance reporting as part of the delivery team</li>
+          <li>Collaborated with strategy, creative, and analytics teams to deliver integrated campaigns across the full funnel</li>
+          <li>Supported new business pitches; built strong client trust through proactive communication and consistent delivery</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-row rv">
+      <div>
+        <div class="exp-yr">2020 – 2021</div>
+        <div class="exp-co">MERKLE SOKRATI</div>
+        <div class="exp-co-sub">Dentsu Group<br/>India</div>
+      </div>
+      <div>
+        <div class="exp-role">Performance Marketing Executive</div>
+        <div class="exp-vert">FMCG · Retail · D2C</div>
+        <ul class="exp-pts">
+          <li>Executed paid campaigns across Meta Ads and Google Ads for FMCG, retail, and D2C clients</li>
+          <li>Managed campaign setup, bid strategies, audience targeting, and creative testing cycles towards CPA, ROAS, and lead volume targets</li>
+          <li>Maintained performance trackers and prepared weekly/monthly reports for internal and client-facing stakeholders</li>
+          <li>Built foundational expertise in funnel-based campaign architecture and media buying</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section class="s" id="ch" style="background:var(--charcoal)">
+  <div class="s-label">Channels & Capabilities</div>
+  <div class="s-title">BUILT ACROSS<br/><em>every major paid channel.</em></div>
+  <div class="channels-grid">
+    <div class="ch rv d1">
+      <div class="ch-cat">Meta Ecosystem</div>
+      <div class="ch-name">META ADS</div>
+      <div class="ch-body">CTWA, Lead Gen, Retargeting, App Install & Retention, Conversion. WhatsApp Business API & bot-driven qualification flows.</div>
+    </div>
+    <div class="ch rv d2">
+      <div class="ch-cat">Google Ecosystem</div>
+      <div class="ch-name">GOOGLE ADS</div>
+      <div class="ch-body">Brand Search, Competitor, Generic, Display, PMax with ECL, YouTube, UAC. GA4 + GTM integration and full-funnel tracking.</div>
+    </div>
+    <div class="ch rv d3">
+      <div class="ch-cat">Programmatic</div>
+      <div class="ch-name">DV360</div>
+      <div class="ch-body">Working knowledge of programmatic branding campaigns — audience targeting, frequency management, and reach-based media planning. Actively deepening expertise.</div>
+    </div>
+    <div class="ch rv d4">
+      <div class="ch-cat">Professional Social</div>
+      <div class="ch-name">LINKEDIN ADS</div>
+      <div class="ch-body">B2B and education-focused lead gen. Sponsored content, Lead Gen Forms, and account-based audience segmentation.</div>
+    </div>
+    <div class="ch rv d5">
+      <div class="ch-cat">Emerging Channels</div>
+      <div class="ch-name">SNAPCHAT</div>
+      <div class="ch-body">Youth-oriented branding and app campaigns. Creative-native formats, AR ads, and audience reach at scale.</div>
+    </div>
+    <div class="ch rv d6">
+      <div class="ch-cat">Measurement Stack</div>
+      <div class="ch-name">ANALYTICS</div>
+      <div class="ch-body">AppsFlyer MMP, GA4, GTM, Excel & Sheets. Full-funnel reporting from impression to post-conversion quality metrics.</div>
+    </div>
+  </div>
+  <div class="tools rv">
+    <span class="tool">Meta Ads Manager</span><span class="tool">Google Ads</span>
+    <span class="tool">DV360</span><span class="tool">LinkedIn Ads</span>
+    <span class="tool">Snapchat Ads</span><span class="tool">GA4</span>
+    <span class="tool">GTM</span><span class="tool">AppsFlyer MMP</span>
+    <span class="tool">WhatsApp Business API</span><span class="tool">Meta Business Suite</span>
+    <span class="tool">CRM & Automation</span><span class="tool">Google Sheets</span>
+    <span class="tool">PowerPoint / Pitch Decks</span><span class="tool">Instagram Growth</span>
+    <span class="tool">Pinterest Strategy</span><span class="tool">Media Planning</span>
+    <span class="tool">Creative Strategy</span><span class="tool">QBR Facilitation</span>
+    <span class="tool">Account Management</span><span class="tool">Client Strategy</span>
+  </div>
+</section>
+
+<!-- VERTICALS -->
+<section class="s" id="vert">
+  <div class="s-label">Verticals</div>
+  <div class="s-title">CROSS-INDUSTRY<br/><em>depth.</em></div>
+  <div class="verts">
+    <div class="vert rv d1">
+      <span class="vert-icon">🎓</span>
+      <div class="vert-n">EDUCATION</div>
+      <div class="vert-x">CGC University<br/>Amity University<br/>Aakash Educational</div>
+    </div>
+    <div class="vert rv d2">
+      <span class="vert-icon">📺</span>
+      <div class="vert-n">OTT & ENTERTAINMENT</div>
+      <div class="vert-x">Zee5<br/>App acquisition,<br/>retention & lifecycle</div>
+    </div>
+    <div class="vert rv d3">
+      <span class="vert-icon">🛒</span>
+      <div class="vert-n">E-COMMERCE & D2C</div>
+      <div class="vert-x">FMCG, Retail<br/>Direct-to-consumer<br/>brands</div>
+    </div>
+    <div class="vert rv d4">
+      <span class="vert-icon">⚙️</span>
+      <div class="vert-n">SERVICES</div>
+      <div class="vert-x">Lead gen, performance<br/>and brand mandates<br/>across verticals</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="f-name">AMAN</div>
+    <div class="f-sub">Group Head · Performance & Account Strategy · Mohali, India</div>
+  </div>
+  <div class="f-right">
+    <p>AGL Hakuhodo · Publicis Groupe · Merkle Sokrati</p>
+    <span class="f-quote">"Creatives are king. Data is queen.<br/>Strategy is everything."</span>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),cT=document.getElementById('curT');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){tx+=(mx-tx)*.11;ty+=(my-ty)*.11;cT.style.left=tx+'px';cT.style.top=ty+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,.win,.ch,.vert,.path,.stat-cell,.tag,.tool').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cT.style.width='48px';cT.style.height='48px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';cT.style.width='32px';cT.style.height='32px'});
+});
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
